@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:web3dart_example/signing/custom_sign.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:convert/convert.dart';
 part 'contract_event.dart';
@@ -98,8 +99,25 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
 
     /// send wallet to contract
     on<SendWalletToContract>((event, emit) async {
-      var credentials = EthPrivateKey.fromHex(state.myAddressPrivateKey);
+      /// versi lama
+      // var credentials = EthPrivateKey.fromHex(state.myAddressPrivateKey);
+      // var result = client.sendTransaction(
+      //   credentials,
+      //   Transaction.callContract(
+      //     contract: contract,
+      //     function: contributeFunction,
+      //     parameters: [],
+      //     value: EtherAmount.inWei(BigInt.parse('10000000000')),
+      //   ),
+      // );
 
+      /// versi baru
+      // CustomEthPrivateKey credentials =
+      //     CustomEthPrivateKey.fromHex(state.myAddressPrivateKey);
+      CustomCredential credentials = CustomCredential(
+        privateKey: EthPrivateKey.fromHex(state.myAddressPrivateKey),
+        client: client,
+      );
       var result = client.sendTransaction(
         credentials,
         Transaction.callContract(
