@@ -111,9 +111,7 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
       //   ),
       // );
 
-      /// versi baru
-      // CustomEthPrivateKey credentials =
-      //     CustomEthPrivateKey.fromHex(state.myAddressPrivateKey);
+      /// versi baru (custom credential)
       CustomCredential credentials = CustomCredential(
         privateKey: EthPrivateKey.fromHex(state.myAddressPrivateKey),
         client: client,
